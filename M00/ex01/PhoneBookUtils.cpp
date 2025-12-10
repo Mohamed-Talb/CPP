@@ -10,6 +10,7 @@ void PhoneBook::Add(Contact Arg)
 {
     if (index > 7)
         index = 0;
+    Arg.setIndex(index);
     Contacts[index] = Arg;
     index++;
     if (count < 9)
@@ -17,32 +18,24 @@ void PhoneBook::Add(Contact Arg)
     return ;
 }
 
+void PhoneBook::BookSummary()
+{
+    for (int i = 0; i < count; i++)
+        Contacts[i].ContactSummary();
+}
+
 void PhoneBook::Search(std::string Index)
 {
     int IIndex;
-    std::string Elements[5];
-    std::string Element;
+    Contact contact;
 
     IIndex = Index[0] - '0';
-    if (Index.length() != 1 || IIndex > count)
+    if (Index.length() != 1 ||  IIndex < 1 || IIndex > count)
     {
-        std::cout << "Contact Doesn't Exist\n" << std::endl;
+        std::cout << "BAD INDEX, TRY AGAIN!!!" << std::endl;
         return ;
     }
-    Elements[0] = Contacts[IIndex-1].getElement("FirstName");
-    Elements[1] = Contacts[IIndex-1].getElement("LastName");
-    Elements[3] = Contacts[IIndex-1].getElement("NickName");
-    Elements[4] = Contacts[IIndex-1].getElement("PhoneNumber");
-    Elements[5] = Contacts[IIndex-1].getElement("DarkestSecret");
-    for (int i; i < 6; i++)
-    {
-        Element = Elements[i];
-        if (Element.length() > 9)
-            Element = Element.substr(0,9) + '.';
-        std::cout << Element;
-        if (i != 5)
-            std::cout << "|";
-    }
+    Contacts[IIndex - 1].ContactInfos();
     std::cout << std::endl;
     return ;
 }
