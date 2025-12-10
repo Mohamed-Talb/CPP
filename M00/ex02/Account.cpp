@@ -4,9 +4,9 @@
 #include <iomanip>
 
 int Account::_nbAccounts = 0;
-int Account::_totalAmount = 0;
+int Account::_totalAmount =0;
 int Account::_totalNbDeposits = 0;
-int Account::_totalNbWithdrawals = 0; /// ????????????????????????????
+int Account::_totalNbWithdrawals = 0;
 
 // GETERS
 int Account::getNbAccounts(void)
@@ -119,6 +119,7 @@ bool Account::makeWithdrawal(int withdrawal)
 
 void Account::displayAccountsInfos()
 {
+    _displayTimestamp();
 	std::cout << "accounts:" << _nbAccounts 
               << ";total:" << _totalAmount 
               << ";deposits:" << _totalNbDeposits 

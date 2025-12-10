@@ -3,8 +3,8 @@ PHONEBOOK_SRC = PhoneBook.cpp Contact.cpp PhoneBookUtils.cpp
 PHONEBOOK_OBJ = $(PHONEBOOK_SRC:.cpp=.o)
 
 #COMPILING
-CPPC = c++ -g3
-FLAGS = -Wall -Wextra -Werror
+CXX = c++ -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror
 
 #OUTPUT
 NAME = PhoneBook
@@ -12,10 +12,10 @@ NAME = PhoneBook
 all: $(NAME)
 
 $(NAME): $(PHONEBOOK_OBJ)
-	$(CPPC) $(PHONEBOOK_OBJ) -o $(NAME)
+	$(CXX) $(PHONEBOOK_OBJ) -o $(NAME)
 
 %.o: %.cpp
-	@$(CPPC) $(FLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(PHONEBOOK_OBJ)

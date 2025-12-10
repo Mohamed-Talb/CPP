@@ -1,24 +1,24 @@
-Account_SRC = tests.cpp Account.cpp		
+ACCOUNT_SRC = tests.cpp Account.cpp		
 
-Account_OBJ = $(Account_SRC:.cpp=.o)
+ACCOUNT_OBJ = $(ACCOUNT_SRC:.cpp=.o)
 
 #COMPILING
-CPPC = c++ -g3
-# FLAGS = -Wall -Wextra -Werror
+CXX = c++ -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror
 
 #OUTPUT
-NAME = Account
+NAME = ACCOUNT
 
 all: $(NAME)
 
-$(NAME): $(Account_OBJ)
-	$(CPPC) $(Account_OBJ) -o $(NAME)
+$(NAME): $(ACCOUNT_OBJ)
+	$(CXX) $(ACCOUNT_OBJ) -o $(NAME)
 
 %.o: %.cpp
-	@$(CPPC) $(FLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
-	@rm -rf $(Account_OBJ)
+	@rm -rf $(ACCOUNT_OBJ)
 
 fclean: clean
 	@rm -rf $(NAME)

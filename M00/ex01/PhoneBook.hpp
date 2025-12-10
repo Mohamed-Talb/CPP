@@ -7,7 +7,8 @@ class PhoneBook
     int index;
     public:
     PhoneBook();
+    int BookSize();
+    void BookSummary();
     void Add(Contact Arg);
     void Search(std::string Index);
-    int BookSize();
 };
