@@ -1,0 +1,18 @@
+#include <iostream>
+
+int main()
+{
+    std::string String = "HI THIS IS BRAIN";
+    std::string *stringPtr = &String;
+    std::string &stringRef = String;
+
+    std::cout  << &String << std::endl; 
+    std::cout  << stringPtr << std::endl; 
+    std::cout  << &stringRef << std::endl; 
+    std::cout  << &String << std::endl; 
+
+    std::cout  << String << std::endl; 
+    // std::cout  << (*stringPtr)[0] << std::endl; 
+    std::cout  << stringPtr << std::endl; 
+    std::cout  << stringRef << std::endl; 
+}
