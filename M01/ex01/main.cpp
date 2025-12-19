@@ -9,4 +9,5 @@ int main()
     {
         ZombiesH[i].announce();
     }
+    delete[] ZombiesH; // how delete know the size of freeing 
 }
