@@ -15,7 +15,7 @@ $(NAME): $(ZOMBIE_OBJ)
 	$(CXX) $(ZOMBIE_OBJ) -o $(NAME)
 
 %.o: %.cpp
-	@$(CXX) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 clean:
 	@rm -rf $(ZOMBIE_OBJ)
