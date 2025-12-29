@@ -9,6 +9,7 @@ class Zombie
     public:
         Zombie(std::string name);
         void announce();
+        // add destructor
 };
 
 Zombie *newZombie(std::string name);
