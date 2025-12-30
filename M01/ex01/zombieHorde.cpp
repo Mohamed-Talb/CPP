@@ -1,9 +1,14 @@
 #include "Zombie.hpp"
 
-Zombie* zombieHorde( int N, std::string name )
+Zombie* zombieHorde(int N, const std::string name)
 {
-    Zombie *zombiesArr = new Zombie[N];
-    for (int i = 0; i < N; i++)
+    if (N <= 0) 
+    {
+        std::cerr << "ERROR: Horde size must be positive" << std::endl;
+        return NULL;
+    }
+    Zombie* zombiesArr = new Zombie[N];
+    for (int i = 0; i < N; i++) 
     {
         zombiesArr[i].setName(name);
     }

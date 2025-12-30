@@ -2,12 +2,14 @@
 
 int main()
 {
-    std::string name = "mohamed"; /// ???????????????????? NULL
-    int N = 10; // negative
+    std::string name = "Rachid";
+    int N = 10;
     Zombie *ZombiesH = zombieHorde(N, name);
-    delete[] ZombiesH; // how delete know the size of freeing 
+    if (!ZombiesH) 
+        return 1;
     for (int i = 0; i < N; i++)
     {
         ZombiesH[i].announce();
     }
+    delete[] ZombiesH;
 }

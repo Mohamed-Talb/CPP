@@ -7,7 +7,7 @@ CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 #OUTPUT
-NAME = BRAIN
+NAME = Brain
 
 all: $(NAME)
 

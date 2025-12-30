@@ -3,19 +3,14 @@
 int main()
 {
     std::string String = "HI THIS IS BRAIN";
-    std::string *stringPtr = &String;
-    std::string &stringRef = String;
+    std::string *stringPTR = &String;
+    std::string &stringREF = String;
 
     std::cout  << &String << std::endl; 
-    std::cout  << stringPtr << std::endl; 
-    std::cout  << &stringRef << std::endl; 
+    std::cout  << stringPTR << std::endl; 
+    std::cout  << &stringREF << std::endl; 
 
     std::cout  << String << std::endl; 
-    std::cout  << *stringPtr << std::endl; //??????????????????
-    std::cout  << stringRef << std::endl; 
-
-    // std::string *strptr2 = &stringRef;
-    // why we use reference 
-    // ptr = address
-    // *ptr 
+    std::cout  << *stringPTR << std::endl;
+    std::cout  << stringREF << std::endl; 
 }
