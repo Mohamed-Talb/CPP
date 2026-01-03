@@ -9,7 +9,6 @@ Fixed::Fixed(const Fixed &F)
 {
     std::cout << "Copy constructor called" << std::endl;
     *this = F;
-    this->fixedPoint = F.fixedPoint;
 }
 Fixed &Fixed::operator=(const Fixed &other)
 {
@@ -29,6 +28,7 @@ int Fixed::getRawBits(void) const
     std::cout << "getRawBits member function called" << std::endl;
     return (fixedPoint);
 }
+
 void Fixed::setRawBits(int const raw)
 {
     fixedPoint = raw;

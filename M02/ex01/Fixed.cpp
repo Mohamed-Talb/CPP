@@ -1,6 +1,6 @@
 #include "Fixed.hpp"
 
-static const int Fraction = 2; /// ???
+const int Fixed::Fraction = 8;
 
 Fixed::Fixed()
 {
@@ -15,9 +15,8 @@ Fixed::Fixed(int Arg)
 }
 Fixed::Fixed(float Arg)
 {
-     std::cout << "float constructor called" << std::endl;
-    // fixedPoint = roundf(Arg * (1 << Fraction));
-    fixedPoint = Arg * (1 << Fraction);
+    std::cout << "float constructor called" << std::endl;
+    fixedPoint = roundf(Arg * (1 << Fraction));
 }
 
 Fixed::Fixed(const Fixed &F)

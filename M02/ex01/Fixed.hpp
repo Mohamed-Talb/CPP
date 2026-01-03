@@ -6,7 +6,7 @@
 class Fixed
 {
     int fixedPoint;
-    static const int Fraction = 13;
+    static const int Fraction;
     public:
         Fixed();
         Fixed(int Arg);

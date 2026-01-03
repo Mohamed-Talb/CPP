@@ -1,6 +1,6 @@
 #include "Fixed.hpp"
 
-static const int Fraction = 2; /// ???
+const int Fixed::Fraction = 8;
 
 Fixed::Fixed()
 {
@@ -96,30 +96,31 @@ bool Fixed::operator!=(const Fixed &F)
 }
 
 
-Fixed &Fixed::operator+(const Fixed &F)
+Fixed Fixed::operator+(const Fixed &F)
 {
     Fixed result;
     result.setRawBits (this->fixedPoint + F.fixedPoint);
     return result;
 }
 
-Fixed &Fixed::operator-(const Fixed &F)
+Fixed Fixed::operator-(const Fixed &F)
 {
     Fixed result;
     result.setRawBits(this->fixedPoint - F.fixedPoint);
     return result;
 }
 
-Fixed &Fixed::operator*(const Fixed &F)
+Fixed Fixed::operator*(const Fixed &F)
 {
     Fixed result;
     result.setRawBits((this->fixedPoint * F.fixedPoint) >> Fraction);
     return result;
 }
 
-Fixed &Fixed::operator/(const Fixed &F)
+Fixed Fixed::operator/(const Fixed &F)
 {
-    Fixed result(roundf((this->fixedPoint /(float)F.fixedPoint) * (1 << Fraction)));
+    Fixed result;
+    result.setRawBits(roundf((this->fixedPoint /(float)F.fixedPoint) * (1 << Fraction)));
     return result;
 }
 

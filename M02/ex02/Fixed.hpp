@@ -6,7 +6,7 @@
 class Fixed
 {
     int fixedPoint;
-    static const int Fraction = 8;
+    static const int Fraction;
     public:
         Fixed();
         Fixed(int Arg);
@@ -18,6 +18,7 @@ class Fixed
         void setRawBits(int const raw);
         float toFloat( void ) const;
         int toInt( void ) const;
+        
         // operators 
         bool operator>(const Fixed &F) const;
         bool operator<(const Fixed &F) const;
@@ -26,10 +27,10 @@ class Fixed
         bool operator==(const Fixed &F);
         bool operator!=(const Fixed &F);
 
-        Fixed &operator+(const Fixed &F);
-        Fixed &operator-(const Fixed &F);
-        Fixed &operator*(const Fixed &F);
-        Fixed &operator/(const Fixed &F);
+        Fixed operator+(const Fixed &F);
+        Fixed operator-(const Fixed &F);
+        Fixed operator*(const Fixed &F);
+        Fixed operator/(const Fixed &F);
 
         Fixed &operator--();
         Fixed operator--(int);
@@ -38,8 +39,8 @@ class Fixed
 
         static Fixed &min(Fixed &A, Fixed &B);
         static const Fixed &min(const Fixed &A, const Fixed &B);
-        static const Fixed &max(const Fixed &A, const Fixed &B);
         static Fixed &max(Fixed &A, Fixed &B);
+        static const Fixed &max(const Fixed &A, const Fixed &B);
 
 };
 
