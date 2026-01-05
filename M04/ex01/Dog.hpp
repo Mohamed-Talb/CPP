@@ -13,6 +13,9 @@ class Dog : public Animal
         Dog(std::string Type);
         Dog(const Dog &A);
         const Dog &operator=(const Dog &A);
+
+        void getIdea();
+        void FillIdeas(std::string Idea);
         void makeSound() const;  
 };
 

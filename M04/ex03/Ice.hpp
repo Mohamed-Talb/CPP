@@ -1,13 +1,20 @@
-#include <iostream>
+#ifndef ICE_HPP
+#define ICE_HPP
 
-class AMateria
+#include "AMateria.hpp"
+#include "ICharacter.hpp"
+
+class Ice : public AMateria
 {
-    protected:
-        std::string type;
     public:
-        AMateria(std::string const & type);
-        std::string const & getType() const;
-        virtual AMateria* clone() const; // implemet return new cure()
-        virtual void use(ICharacter& target);// messgaes
-        //canonical form 
+    Ice();
+    ~Ice();
+    Ice(const Ice &AM);
+    const Ice&operator=(const Ice &AM);
+
+    std::string const & getType() const;
+    AMateria* clone() const;
+    void use(ICharacter& target);  
 };
+
+#endif

@@ -11,7 +11,6 @@ class Brain
     Brain(std::string Type);
     Brain(const Brain &A);
     const Brain &operator=(const Brain &A);
-    void FillIdeas(std::string Idea);
 };
 
 #endif

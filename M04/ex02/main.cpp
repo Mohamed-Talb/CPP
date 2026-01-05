@@ -5,10 +5,11 @@
 int main()
 {
     int size = 10;
-    // Animal animal; // ERROR
 
-    Animal* j = new Dog();
-    Animal* i = new Cat();
+    // Animal S;
+
+    const Animal* j = new Dog();
+    const Animal* i = new Cat();
     delete j;
     delete i;
     const Animal *animals[size];
@@ -19,7 +20,6 @@ int main()
         else
             animals[i] = new Cat();
     }
-    std::cout << std::endl << std::endl;
     std::cout << animals[4]->getType() << " " << std::endl;
     std::cout << animals[5]->getType() << " " << std::endl;
     for (int i = 0; i < size; i++)
@@ -30,4 +30,12 @@ int main()
     {
         delete animals[i];
     }
+
+    Dog *D1 = new Dog();
+    D1->getIdea();
+    D1->FillIdeas("Hello World");
+    Dog *D2 = new Dog(*D1);
+
+    delete D1;
+    delete D2;
 }

@@ -39,11 +39,3 @@ const Brain &Brain::operator=(const Brain &B)
     }
     return *this;
 }
-
-void Brain::FillIdeas(std::string Idea)
-{
-    for (int i = 0; i < 100; i++)
-    {
-        Ideas[i] = Idea;
-    }
-}

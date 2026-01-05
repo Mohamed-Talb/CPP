@@ -13,7 +13,10 @@ class Cat : public Animal
         Cat(std::string Type);
         Cat(const Cat &A);
         const Cat &operator=(const Cat &A);
+        
         void makeSound() const;
+        void getIdea();
+        void FillIdeas(std::string Idea);
 };
 
 #endif

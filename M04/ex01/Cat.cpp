@@ -15,6 +15,7 @@ Cat::~Cat()
 
 Cat::Cat(std::string Type) : Animal(Type)
 {
+    brain = new Brain();
     std::cout << "Cat Parameterized Constructor Called " << std::endl;
 }
 
@@ -30,6 +31,8 @@ const Cat &Cat::operator=(const Cat &A)
     if (this != &A)
     {
         Animal::operator=(A);
+        delete brain;
+        brain = new Brain(*A.brain);
     }
     return *this;
 }
@@ -37,4 +40,17 @@ const Cat &Cat::operator=(const Cat &A)
 void Cat::makeSound() const
 {
     std::cout << "Meoo" << std::endl;
+}
+
+void Cat::FillIdeas(std::string Idea)
+{
+    for (int i = 0; i < 100; i++)
+    {
+        brain->Ideas[0] = Idea;
+    }
+}
+
+void Cat::getIdea()
+{
+    std::cout << "The Brain Full By " << brain->Ideas[0] << std::endl;
 }
