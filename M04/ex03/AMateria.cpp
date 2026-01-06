@@ -28,7 +28,6 @@ std::string const & AMateria::getType() const
 
 void AMateria::use(ICharacter& target)
 {
-    std::cout << "moohaemdmmmdmd" << std::endl;
     (void)target;
     return;
 }
