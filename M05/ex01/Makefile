@@ -1,4 +1,4 @@
-BUREAUCRAT_SRC = main.cpp Bureaucrat.cpp
+BUREAUCRAT_SRC = main.cpp Bureaucrat.cpp Form.cpp
 
 BUREAUCRAT_OBJ = $(BUREAUCRAT_SRC:.cpp=.o)
 

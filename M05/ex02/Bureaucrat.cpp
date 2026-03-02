@@ -1,4 +1,5 @@
 #include "Bureaucrat.hpp"
+#include "Form.hpp"
 
 // CANONICAL FORM FUNCTIONS
 Bureaucrat::Bureaucrat() : name("default"), grade(150) {}
@@ -24,16 +25,28 @@ Bureaucrat::~Bureaucrat() {}
 
 // METHODS
 int Bureaucrat::getGrade() const {return grade;}
-
 std::string Bureaucrat::getName() const {return name;}
+void Bureaucrat::signForm(Form &F)
+{
+    try
+    {
+        F.beSigned(*this);
+        std::cout << name << " signed " << F.getName() << std::endl;
+    }
+    catch (std::exception &error)
+    {
+        std::cout << name << " couldn't sign " << F.getName() << " because " << error.what() << std::endl;
+    }
+}
 
+// EXCEPTIONS
 const char *Bureaucrat::GradeTooHighException::what() const throw()
 {
-	return "Grade too hight.";
+	return "Bereaucrat Grade too hight.";
 }
 const char *Bureaucrat::GradeTooLowException::what() const throw()
 {
-	return "Grade too low";
+	return "Bereaucrat Grade too low.";
 }
 
 void Bureaucrat::decrementGrade()

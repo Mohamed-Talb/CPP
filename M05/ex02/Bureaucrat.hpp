@@ -1,21 +1,30 @@
+#ifndef BUREAUCRAT_HPP
+#define BUREAUCRAT_HPP
 #include <iostream>
 #include <string>
 #include <exception>
+#include <ostream>
+
+class Form;
 
 class Bureaucrat
 {
 	const std::string name;
 	int grade;
 	public:
+		// CANONICAL FORM
 		Bureaucrat();
 		Bureaucrat(std::string name, int grade);
 		Bureaucrat(const Bureaucrat &B);
 		Bureaucrat &operator=(const Bureaucrat &other);
 		~Bureaucrat();
+		// METHODS 
 		std::string getName() const;
 		int getGrade() const; 
 		void incrementGrade();
 		void decrementGrade();
+		void signForm(Form &F);
+		//EXCEPTIONS
 		class GradeTooHighException: public std::exception
 		{
 			public:
@@ -28,4 +37,6 @@ class Bureaucrat
 		};
 };
 
-std::ostream &operator<<(std::ostream &out, const Bureaucrat &B);
+std::ostream &operator<<(std::ostream &out, const Bureaucrat &F);
+
+#endif
