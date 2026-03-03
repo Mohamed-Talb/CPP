@@ -1,0 +1,32 @@
+#include "PresidentialPardonForm.hpp"
+
+// CANONICAL FUNCTIONS
+PresidentialPardonForm::PresidentialPardonForm(): AForm("PresidentialPardonForm",72,45), target(default){}
+
+PresidentialPardonForm::PresidentialPardonForm(std::string target): AForm("PresidentialPardonForm",72,45), target(target){}
+
+PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other): AForm(other), target(other.target) {};
+
+PresidentialPardonForm::~PresidentialPardonForm() {}
+
+PresidentialPardonForm &PresidentialPardonForm::operator=(const PresidentialPardonForm &other)
+{
+	if (&other != this)
+    {
+        AForm::operator=(other);
+        this->target = other.target;
+    }
+	return *this;
+}
+
+// METHODS
+void PresidentialPardonForm::execute(const Bureaucrat& executor) const
+{
+    if (!this->getIsSigned())
+        throw Form::FormNotSignedException();
+    if (executor.getGrade() > this->getGradeToExecute())
+        throw Form::GradeTooLowException();
+    std::cout << this->getTarget() 
+              << " has been pardoned by Zaphod Beeblebrox." 
+              << std::endl;
+}
