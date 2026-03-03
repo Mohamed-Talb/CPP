@@ -3,7 +3,7 @@
 // CANONICAL FUNCTIONS
 ShrubberyCreationForm::ShrubberyCreationForm(): AForm("ShrubberyCreationForm",145,137), target("default"){}
 
-ShrubberyCreationForm::ShrubberyCreationForm(std::string target): AForm("ShrubberyCreationForm",145,137), target(target){}
+ShrubberyCreationForm::ShrubberyCreationForm(std::string name, std::string target): AForm(name,145,137), target(target){}
 
 ShrubberyCreationForm::ShrubberyCreationForm(const ShrubberyCreationForm &other): AForm(other), target(other.target) {};
 
@@ -29,4 +29,10 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
     std::ofstream file((target + "_shrubbery").c_str());
     if (!file.is_open())
         throw std::runtime_error("File open failed");
+}
+
+
+AForm *ShrubberyCreationForm::createForm(std::string name, std::string target)
+{
+	return new ShrubberyCreationForm(name, target);
 }

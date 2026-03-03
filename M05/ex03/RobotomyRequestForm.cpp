@@ -3,7 +3,7 @@
 // CANONICAL FUNCTIONS
 RobotomyRequestForm::RobotomyRequestForm(): AForm("RobotomyRequestForm",72,45), target("default"){}
 
-RobotomyRequestForm::RobotomyRequestForm(std::string target): AForm("RobotomyRequestForm",72,45), target(target){}
+RobotomyRequestForm::RobotomyRequestForm(std::string name, std::string target): AForm(name,72,45), target(target){}
 
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm &other): AForm(other), target(other.target) {};
 
@@ -32,4 +32,10 @@ void RobotomyRequestForm::execute(const Bureaucrat& executor) const
         std::cout << target << " has been robotomized successfully!" << std::endl;
     else
         std::cout << "Robotomy failed on " << target << "." << std::endl;
+}
+
+
+AForm *RobotomyRequestForm::createForm(std::string name, std::string target)
+{
+	return new RobotomyRequestForm(name, target);
 }
