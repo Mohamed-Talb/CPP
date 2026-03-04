@@ -14,7 +14,7 @@ class AForm
 		AForm(std::string name, int gradeToSign, int gradeToExecute);
 		AForm(const AForm &F);
 		AForm &operator=(const AForm &other);
-		~AForm();
+		virtual ~AForm();
 
         // GETTERS
         bool checkSign() const;
@@ -47,4 +47,5 @@ class AForm
 		};
 };
 
+std::ostream &operator<<(std::ostream &out, const AForm &F);
 #endif

@@ -6,6 +6,8 @@ Bureaucrat::Bureaucrat() : name("default"), grade(150) {}
 
 Bureaucrat::Bureaucrat(const Bureaucrat &B) : name(B.name), grade(B.grade){}
 
+Bureaucrat::~Bureaucrat() {}
+
 Bureaucrat::Bureaucrat(std::string name, int grade) : name(name), grade(grade)
 {
 	if (this->grade < 1)
@@ -21,12 +23,10 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 	return *this;
 }
 
-Bureaucrat::~Bureaucrat() {}
 
 // METHODS
 int Bureaucrat::getGrade() const {return grade;}
 std::string Bureaucrat::getName() const {return name;}
-
 
 void Bureaucrat::decrementGrade()
 {

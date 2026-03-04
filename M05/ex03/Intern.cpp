@@ -1,5 +1,23 @@
 #include "Intern.hpp"
 
+#include "Intern.hpp"
+
+Intern::Intern(){}
+
+Intern::Intern(const Intern& other)
+{
+    (void)other;
+}
+
+Intern& Intern::operator=(const Intern& other)
+{
+    (void)other;
+    return *this;
+}
+
+Intern::~Intern(){}
+
+
 AForm *Intern::makeForm(std::string formName, std::string target)
 {
 	const std::string formsCatalogue[3] = {"shrubbery creation", "robotomy request", "presidential pardon"};
@@ -12,5 +30,5 @@ AForm *Intern::makeForm(std::string formName, std::string target)
 			return printer[i](formName, target);
 		}
 	}
-	throw std::invalid_argument("Form name not recognized");
+	throw std::invalid_argument("Error: Form does not exist.");
 }

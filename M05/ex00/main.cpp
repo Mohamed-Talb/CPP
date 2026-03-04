@@ -7,7 +7,8 @@ int main()
         Bureaucrat B = Bureaucrat();
         // B.decrementGrade();
         B.incrementGrade();
-        Bureaucrat B2 = Bureaucrat("Henry Kissinger", 200);
+        Bureaucrat B2 = Bureaucrat("Henry Kissinger", 150);
+		std::cout << B2 << std::endl;
     }
     catch(const std::exception& e)
     {

@@ -1,9 +1,9 @@
 #include "PresidentialPardonForm.hpp"
 
 // CANONICAL FUNCTIONS
-PresidentialPardonForm::PresidentialPardonForm(): AForm("PresidentialPardonForm",72,45), target("default"){}
+PresidentialPardonForm::PresidentialPardonForm(): AForm("PresidentialPardon",25,5), target("default"){}
 
-PresidentialPardonForm::PresidentialPardonForm(std::string target): AForm("PresidentialPardonForm",72,45), target(target){}
+PresidentialPardonForm::PresidentialPardonForm(std::string name, std::string target): AForm(name,72,45), target(target){}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm &other): AForm(other), target(other.target) {};
 
@@ -25,7 +25,7 @@ void PresidentialPardonForm::execute(const Bureaucrat& executor) const
     if (!checkSign())
         throw AForm::FormNotSignedException();
     if (executor.getGrade() > getGradeToExecute())
-        throw AForm::GradeTooLowException();
+        throw Bureaucrat::GradeTooLowException();
     std::cout << target 
               << " has been pardoned by Zaphod Beeblebrox." 
               << std::endl;

@@ -20,19 +20,51 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=(const ShrubberyCreationF
 }
 
 // METHODS
+AForm *ShrubberyCreationForm::createForm(std::string name, std::string target)
+{
+	return new ShrubberyCreationForm(name, target);
+}
+
+
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
     if (!checkSign())
         throw AForm::FormNotSignedException();
     else if (executor.getGrade() > getGradeToExecute())
-        throw AForm::GradeTooLowException();
+        throw Bureaucrat::GradeTooLowException();
     std::ofstream file((target + "_shrubbery").c_str());
     if (!file.is_open())
-        throw std::runtime_error("File open failed");
+	{
+		throw std::runtime_error("File open failed");
+	}
+	file <<
+		"                           &&          &%  &%#                      \n"
+		"                           &|         %@%&@&@                       \n"
+		"                    @&## &@&:        #&%%;&#%&@&@                   \n"
+		"             && @#%\\@#@@%@% \\___; |%%&#%@%##@%@                   \n"
+		"             % @ %#%@\\&@#&@ &#   \\&  @|%#&%@%  @                  \n"
+		"          &&&&##%#@#=  @ @&%#%     \\ /### &&#%@#                   \n"
+		"         &    %&&&%@ \\|%#&=@#@%#   :_:%@&#@%#&&@%                  \n"
+		"        %     %@%& @  &%   #&%&    ~    #@@#%&%&#@&                 \n"
+		"     %%#%&&  #@/_&_;_\\~     @  #   =|  % @%##%##@ &                \n"
+		"    # &:&%%@@~        |\\           |_:;|&\\&  @@&@#&@              \n"
+		" #@   &%%%@@      ://_;~\\_____    ///   &#@#&#&%#@                 \n"
+		"&@#@   #@@%_&@__/ /           \\  ;    @#@&&@&&@##%#@               \n"
+		"&%   %@=//;_ : /               =|      %& @@@@&&&  @                \n"
+		"       @                         ~    &  @   %  %                   \n"
+		"                                  \\                                \n"
+		"                                  =|\\                              \n"
+		"                                   ||      _~___;                   \n"
+		"                                   ||  __~_      _~__\\             \n"
+		"                                   ____               \\            \n"
+		"                                   ~|                    \\         \n"
+		"                                   ||               %&    |         \n"
+		"                                   ||            @%#_&    /    %    \n"
+		"                      \\________.-./||\\.__________/ @~&~~~   @##@&% \n"
+		"                      	\\   ~                 . /  @@@@/#&%|@&#@%#  \n"
+		"                        \\_____________________/  &&&%@%###~%&/&&   \n"
+		"                            -               -       @#&&&@@@&##%@%  \n"
+		"                                                     %&  %&@&%&#%#@ \n";
 }
 
 
-AForm *ShrubberyCreationForm::createForm(std::string name, std::string target)
-{
-	return new ShrubberyCreationForm(name, target);
-}
