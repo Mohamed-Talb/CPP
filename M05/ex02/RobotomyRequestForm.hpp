@@ -1,6 +1,10 @@
+#ifndef ROBOTOMYREQUESTFORM_HPP
+#define ROBOTOMYREQUESTFORM_HPP
+
 #include "AForm.hpp"
 #include <cstdlib>
 #include <ctime> 
+
 class RobotomyRequestForm : public AForm
 {
 	std::string target;
@@ -13,3 +17,5 @@ class RobotomyRequestForm : public AForm
 
 		virtual void execute(Bureaucrat const &executor) const;
 };
+
+#endif

@@ -1,3 +1,6 @@
+#ifndef PRESIDENTIALPARDONFORM_HPP
+#define PRESIDENTIALPARDONFORM_HPP
+
 #include "AForm.hpp"
 
 class PresidentialPardonForm : public AForm
@@ -12,3 +15,5 @@ class PresidentialPardonForm : public AForm
 		static AForm *createForm(std::string name, std::string target);
 		virtual void execute(Bureaucrat const &executor) const;
 };
+
+#endif
