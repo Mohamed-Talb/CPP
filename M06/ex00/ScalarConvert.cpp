@@ -43,16 +43,26 @@ void printInt(double value)
         std::cout << "int: " << static_cast<int>(value) << std::endl;
 }
 
-void printFloat(double value, std::string input)
+void printFloat(double value)
 {
-	std::string precision = (value - strtod(input.c_str(), NULL) == 0 && !std::isnan(value) && !std::isinf(value)) ? ".0f" : "f";
-	std::cout << "float: " << static_cast<float>(value) << precision << std::endl;
+    float f = static_cast<float>(value);
+
+    std::cout << "float: " << f;
+    if (std::isnan(f) || std::isinf(f))
+        std::cout << "f";
+    else if (f == static_cast<int>(f))
+        std::cout << ".0f";
+    else
+        std::cout << "f";
+    std::cout << std::endl;
 }
 
-void printDouble(double value, std::string input)
+void printDouble(double value)
 {
-	std::string precision = (value - strtod(input.c_str(), NULL) == 0 && !std::isnan(value) && !std::isinf(value)) ? ".0" : "";
-    std::cout << "double: " << value << precision <<  std::endl;
+    std::cout << "double: " << value;
+    if (!std::isnan(value) && !std::isinf(value) && value == static_cast<int>(value))
+        std::cout << ".0";
+    std::cout << std::endl;
 }
 
 void ScalarConvert::convert(std::string param)
@@ -70,6 +80,6 @@ void ScalarConvert::convert(std::string param)
         value = strtod(param.c_str(), NULL);
     printChar(value);
     printInt(value);
-    printFloat(value, param);
-    printDouble(value, param);
+    printFloat(value);
+    printDouble(value);
 }
