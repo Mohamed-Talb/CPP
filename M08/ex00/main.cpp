@@ -1,4 +1,6 @@
 #include "easyfind.hpp"
+#include <vector>
+#include <list>
 
 template <typename C>
 void printContainer(C container)

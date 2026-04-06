@@ -1,10 +1,10 @@
 #ifndef SPAN_HPP
 #define SPAN_HPP
 #include <iostream>
-#include <vector>
-#include <exception>
 #include <algorithm>
 #include <limits>
+#include <stdexcept>
+#include <vector>
 
 class Span
 {
@@ -17,9 +17,11 @@ class Span
     Span(const Span& other);
     Span& operator=(const Span& other);
     ~Span();
-	void addNumber(int N);
+	void addNumber(int Value);
 	int shortestSpan();
 	int longestSpan();
+	template <typename Iterator>
+	void addRange(Iterator begin, Iterator end);
 };
 
 #endif

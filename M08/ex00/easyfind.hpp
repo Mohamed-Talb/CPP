@@ -1,14 +1,16 @@
-#ifndef EASYFIND_HTPP
-#define EASYFIND_HTPP
+#ifndef EASYFIND_HPP
+#define EASYFIND_HPP
 
 #include <algorithm>
-#include <iterator>
 #include <stdexcept>
 #include <iostream>
-#include <vector>
-#include <list>
 
 template <typename T>
-void easyfind(T container, int arg);
+typename T::iterator easyfind(T& container, int value);
+
+template <typename T>
+typename T::const_iterator easyfind(const T& container, int value);
+
 #include "easyfind.tpp"
+
 #endif
