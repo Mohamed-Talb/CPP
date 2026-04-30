@@ -9,7 +9,14 @@
 
 class BitcoinExchange
 {
-	
+	std::map<std::string, int> bitcoinPrices;
+    public:
+    BitcoinExchange();
+    ~BitcoinExchange();
+    BitcoinExchange(std::string DBPath);
+    
+    std::string readDB(std::string DBPath);
+    void printExchangeHistory();
 };
 
 #endif
