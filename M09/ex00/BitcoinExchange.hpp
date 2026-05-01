@@ -2,21 +2,26 @@
 #define BITCOINEXCHANGE_HPP
 
 #include <iostream>
-#include <string>
-#include <sstream> 
 #include <fstream>
+#include <string>
 #include <map>
+#include <stdexcept>
+#include <cstdlib>
+#include <cctype>
 
 class BitcoinExchange
 {
-	std::map<std::string, int> bitcoinPrices;
-    public:
+private:
+    std::map<std::string, std::string> bitcoinPrices;
+
+public:
     BitcoinExchange();
+    BitcoinExchange(const std::string& DBPath);
     ~BitcoinExchange();
-    BitcoinExchange(std::string DBPath);
-    
-    std::string readDB(std::string DBPath);
-    void printExchangeHistory();
+
+    void readDB(const std::string& DBPath);
+    double getPriceFromDB(const std::string& date);
+    void printExchangeHistory(const std::string& filePath);
 };
 
 #endif

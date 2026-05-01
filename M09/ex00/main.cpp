@@ -1,31 +1,17 @@
 #include "BitcoinExchange.hpp"
 
-
-std::string readDB(std::string DBPath)
+int main(int ac, char **av)
 {
-    std::ifstream DBFile(DBPath);
-    if (DBFile.is_open() == false)
+    if (ac != 2)
+        std::cout << "Error: Invalid Arguments" << std::endl;
+    std::string DBPath = "./data.csv";
+    BitcoinExchange Bit(DBPath);
+    try
     {
-        std::cerr << "Error Opening file: " + DBPath << std::endl;
-        return "";
+        Bit.printExchangeHistory(av[1]);
     }
-    std::string line;
-    int cutPosition;
-    std::string date;
-    std::string price;
-    std::getline(DBFile, line);
-    while (std::getline(DBFile, line))
+    catch (std::exception *err)
     {
-        std::cout << line << std::endl; 
-        cutPosition = line.find(",");
-        date = line.substr(0, cutPosition);
-        price = line.substr(cutPosition + 1, line.length());
-        // std::cout << date << " \\ " << price << std::endl;
+        std::cout << err->what() << std::endl;
     }
-}
-
-
-int main()
-{
-    readDB("./data.csv");
 }
