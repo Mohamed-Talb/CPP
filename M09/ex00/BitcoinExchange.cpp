@@ -133,7 +133,7 @@ double BitcoinExchange::getPriceFromDB(const std::string& date)
     return std::atof(it->second.c_str());
 }
 
-void BitcoinExchange::printExchangeHistory(const std::string& filePath)
+void BitcoinExchange::printExchangeHistory(const std::string &filePath)
 {
     const int DATE_LENGTH = 10;
     const size_t MIN_LENGTH = 14;
@@ -145,7 +145,7 @@ void BitcoinExchange::printExchangeHistory(const std::string& filePath)
         throw std::runtime_error("Error: could not open file.");
 
     std::string line;
-    std::getline(inputFile, line); // skip header: date | value
+    std::getline(inputFile, line);
 
     while (std::getline(inputFile, line))
     {

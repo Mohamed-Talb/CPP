@@ -16,12 +16,12 @@ private:
 
 public:
     BitcoinExchange();
-    BitcoinExchange(const std::string& DBPath);
+    BitcoinExchange(const std::string &DBPath);
     ~BitcoinExchange();
 
-    void readDB(const std::string& DBPath);
-    double getPriceFromDB(const std::string& date);
-    void printExchangeHistory(const std::string& filePath);
+    void readDB(const std::string &DBPath);
+    double getPriceFromDB(const std::string &date);
+    void printExchangeHistory(const std::string &filePath);
 };
 
 #endif
