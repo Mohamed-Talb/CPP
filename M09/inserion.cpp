@@ -7,6 +7,73 @@
 std::vector<int> Numbers;
 typedef std::vector<std::pair<int, int> > Pairs_t;
 
+
+//  J(n) = J(n-1) + 2J(n-2)
+//  (0, 1, 1, 3, 5, 11, 21, 43
+/*
+J₀ = 0 (Given)
+J₁ = 1 (Given)
+J₂ = 1 + 2(0) = 1
+J₃ = 1 + 2(1) = 3
+J₄ = 3 + 2(1) = 5
+J₅ = 5 + 2(3) = 11
+J₆ = 11 + 2(5) = 21
+J₇ = 21 + 2(11) = 43
+
+
+*/
+
+
+static void printVector(const std::vector<int> &sequence)
+{
+    for (std::vector<int>::size_type i = 0; i < sequence.size(); ++i)
+    {
+        std::cout << sequence[i];
+
+        if (i + 1 < sequence.size())
+            std::cout << " ";
+    }
+
+    std::cout << std::endl;
+}
+
+std::vector<int> AC7_generateJcob(int pairsNumber)
+{
+    std::vector<int> JAcob;
+    JAcob.push_back(0);
+    JAcob.push_back(1);
+    int n = 2;
+    int Jn = 0;
+    while (Jn <= pairsNumber)
+    {
+        Jn = JAcob[n - 1] + (2 * JAcob[n - 2]);
+        JAcob.push_back(Jn);
+        n++;
+    }
+    return JAcob;
+}
+
+std::vector<int> AC8_indexesWithJacob(std::vector<int> JAcobSeq)
+{
+    std::vector<int > fullSeq;
+    for (int i = 2; i < JAcobSeq.size(); i++)
+    {
+        fullSeq.push_back(JAcobSeq[i]);
+        if (JAcobSeq[i - 1] != JAcobSeq[i] - 1)
+        {
+            for (int j = JAcobSeq[i] - 1; j > JAcobSeq[i - 1]; j--)
+                fullSeq.push_back(j);
+        }
+    }
+    printVector(fullSeq);
+    for (int i = 0; i < fullSeq.size(); i++)
+    {
+        fullSeq[i] -= 1;
+    }
+    return fullSeq;
+}
+
+
 void AC6_insertLeft(std::vector<int>  &SortedNumbers, int &left)
 {
     std::vector<int>::iterator isPos = std::lower_bound(SortedNumbers.begin(), SortedNumbers.end(), left);
@@ -18,18 +85,17 @@ void AC6_insertLeft(std::vector<int>  &SortedNumbers, int &left)
 
 }
 
-std::vector<int>  AC5_insertLoosers(Pairs_t &sortedPairs, std::vector<int> &sortedWinners)
+std::vector<int>  AC5_insertLoosers(Pairs_t &sortedPairs, std::vector<int> &sortedWinners, std::vector<int> JacobIndexes)
 {
     if (sortedPairs.empty())
         return sortedWinners;
     std::vector<int> sortedNumbers = sortedWinners;
     sortedNumbers.insert(sortedNumbers.begin(), sortedPairs[0].first);
-
-    for (int i = 1; i < sortedPairs.size(); i++)
+    for (int i = 1; i < JacobIndexes.size(); i++)
     {
-        int looser = sortedPairs[i].first;
-        int winner = sortedPairs[i].second;
-
+        std::pair<int, int> currPair = sortedPairs[JacobIndexes[i]];
+        int looser = currPair.first;
+        int winner = currPair.second;
         std::vector<int>::iterator winnerPos = find(sortedNumbers.begin(), sortedNumbers.end(), winner);
         std::vector<int>::iterator insertionPos = std::lower_bound(sortedNumbers.begin(), winnerPos, looser);
         sortedNumbers.insert(insertionPos, looser);
@@ -89,7 +155,7 @@ Pairs_t AC1_CreatePairs(std::vector<int> Sequence, int &leftOver)
 
 std::vector<int> FordJhonson(std::vector<int> Sequence)
 {
-    if (Sequence.size() <= 1)
+    if (Sequence.size() == 1)
     {
         return Sequence;
     }
@@ -100,7 +166,9 @@ std::vector<int> FordJhonson(std::vector<int> Sequence)
     AC3_GetWinners(Pairs, Winners);
     std::vector<int> sortedWinners = FordJhonson(Winners);
     Pairs_t sortedPairs = AC4_SortedPairsByWinners(Pairs, sortedWinners);
-    std::vector<int> sortedNumbers = AC5_insertLoosers(sortedPairs, sortedWinners);
+    std::vector<int> JacobSeq = AC7_generateJcob(sortedWinners.size());
+    std::vector<int> Jacobindexs = AC8_indexesWithJacob(JacobSeq);
+    std::vector<int> sortedNumbers = AC5_insertLoosers(sortedPairs, sortedWinners, Jacobindexs);
     if (leftOver != -1)
         AC6_insertLeft(sortedNumbers, leftOver);
     return sortedNumbers;
@@ -110,18 +178,6 @@ std::vector<int> FordJhonson(std::vector<int> Sequence)
 #include <iostream>
 #include <vector>
 
-static void printVector(const std::vector<int> &sequence)
-{
-    for (std::vector<int>::size_type i = 0; i < sequence.size(); ++i)
-    {
-        std::cout << sequence[i];
-
-        if (i + 1 < sequence.size())
-            std::cout << " ";
-    }
-
-    std::cout << std::endl;
-}
 
 int main()
 {
@@ -140,6 +196,10 @@ int main()
 
     std::cout << "After:  ";
     printVector(sortedSequence);
-
+    
+    // std::vector<int> JacobSeq = AC7_generateJcob(7);
+    // printVector(JacobSeq);
+    // std::vector<int > indexes = AC8_indexesWithJacob(JacobSeq);
+    // printVector(indexes);
     return 0;
 }
