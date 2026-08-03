@@ -4,8 +4,50 @@
 #include <random>
 #include <algorithm>
 
-std::vector<int> Numbers;
-typedef std::vector<std::pair<int, int> > Pairs_t;
+
+
+
+#include <algorithm>
+#include <deque>
+#include <iostream>
+#include <utility>
+#include <vector>
+#include <cstddef>
+
+typedef std::vector<int> IntVector;
+typedef std::deque<int> IntDeque;
+typedef std::pair<int, int> Pair;
+typedef std::vector<Pair> PairVector;
+
+
+
+#include <cerrno>
+#include <climits>
+#include <cstdlib>
+#include <set>
+#include <sstream>
+#include <string>
+#include <vector>
+#include "PmergeMe.hpp"
+#include <deque>
+#include <iostream>
+#include <vector>
+
+
+
+template <typename Container>
+void printSequence(const Container &sequence)
+{
+    typename Container::const_iterator it = sequence.begin();
+    while (it != sequence.end())
+    {
+        std::cout << *it;
+        ++it;
+        if (it != sequence.end())
+            std::cout << " ";
+    }
+    std::cout << std::endl;
+}
 
 
 //  J(n) = J(n-1) + 2J(n-2)
@@ -19,187 +61,191 @@ J₄ = 3 + 2(1) = 5
 J₅ = 5 + 2(3) = 11
 J₆ = 11 + 2(5) = 21
 J₇ = 21 + 2(11) = 43
-
-
 */
 
-
-static void printVector(const std::vector<int> &sequence)
+IntVector generateJacobsthalSequence(int pairCount)
 {
-    for (std::vector<int>::size_type i = 0; i < sequence.size(); ++i)
+    IntVector jacobsthal;
+
+    jacobsthal.push_back(0);
+    jacobsthal.push_back(1);
+
+    int index = 2;
+    int current = 0;
+    while (current < pairCount)
     {
-        std::cout << sequence[i];
-
-        if (i + 1 < sequence.size())
-            std::cout << " ";
+        current = jacobsthal[index - 1] + 2 * jacobsthal[index - 2];
+        jacobsthal.push_back(current);
+        ++index;
     }
-
-    std::cout << std::endl;
+    return jacobsthal;
 }
 
-std::vector<int> AC7_generateJcob(int pairsNumber)
+IntVector generateInsertionIndexes(const IntVector &jacobsthal, int pairCount)
 {
-    std::vector<int> JAcob;
-    JAcob.push_back(0);
-    JAcob.push_back(1);
-    int n = 2;
-    int Jn = 0;
-    while (Jn <= pairsNumber)
+    IntVector indexes;
+
+    if (pairCount <= 1)
+        return indexes;
+
+    int previousBoundary = 1;
+    for (size_t i = 3; i < jacobsthal.size(); ++i)
     {
-        Jn = JAcob[n - 1] + (2 * JAcob[n - 2]);
-        JAcob.push_back(Jn);
-        n++;
+        int currentBoundary = jacobsthal[i];
+        if (currentBoundary > pairCount)
+            currentBoundary = pairCount;
+        for (int pairNumber = currentBoundary; pairNumber > previousBoundary; --pairNumber)
+            indexes.push_back(pairNumber - 1);
+        previousBoundary = currentBoundary;
+        if (previousBoundary == pairCount)
+            break;
     }
-    return JAcob;
+
+    return indexes;
 }
 
-std::vector<int> AC8_indexesWithJacob(std::vector<int> JAcobSeq)
+template <typename Container>
+PairVector createPairs(const Container &sequence, int &leftover, bool &hasLeftover)
 {
-    std::vector<int > fullSeq;
-    for (int i = 2; i < JAcobSeq.size(); i++)
+    PairVector pairs;
+    hasLeftover = sequence.size() % 2 != 0;
+    size_t pairedSize = sequence.size();
+    if (hasLeftover)
     {
-        fullSeq.push_back(JAcobSeq[i]);
-        if (JAcobSeq[i - 1] != JAcobSeq[i] - 1)
+        leftover = sequence.back();
+        --pairedSize;
+    }
+    for (size_t i = 0; i < pairedSize; i += 2)
+        pairs.push_back(std::make_pair(sequence[i], sequence[i + 1]));
+
+    return pairs;
+}
+
+void sortEachPair(PairVector &pairs)
+{
+    for (size_t i = 0; i < pairs.size(); ++i)
+    {
+        if (pairs[i].first > pairs[i].second)
+            std::swap(pairs[i].first, pairs[i].second);
+    }
+}
+
+template <typename Container>
+Container getWinners(const PairVector &pairs)
+{
+    Container winners;
+    for (size_t i = 0; i < pairs.size(); ++i)
+        winners.push_back(pairs[i].second);
+    return winners;
+}
+
+template <typename Container>
+PairVector sortPairsByWinners(const PairVector &pairs, const Container &sortedWinners)
+{
+    PairVector sortedPairs;
+    typename Container::const_iterator winnerIt = sortedWinners.begin();
+
+    while (winnerIt != sortedWinners.end())
+    {
+        for (std::size_t i = 0; i < pairs.size(); ++i)
         {
-            for (int j = JAcobSeq[i] - 1; j > JAcobSeq[i - 1]; j--)
-                fullSeq.push_back(j);
-        }
-    }
-    printVector(fullSeq);
-    for (int i = 0; i < fullSeq.size(); i++)
-    {
-        fullSeq[i] -= 1;
-    }
-    return fullSeq;
-}
-
-
-void AC6_insertLeft(std::vector<int>  &SortedNumbers, int &left)
-{
-    std::vector<int>::iterator isPos = std::lower_bound(SortedNumbers.begin(), SortedNumbers.end(), left);
-    SortedNumbers.insert(isPos, left);
-    // for (int i = 0; i < SortedNumbers.size(); i++)
-    // {
-    //     if ()
-    // }
-
-}
-
-std::vector<int>  AC5_insertLoosers(Pairs_t &sortedPairs, std::vector<int> &sortedWinners, std::vector<int> JacobIndexes)
-{
-    if (sortedPairs.empty())
-        return sortedWinners;
-    std::vector<int> sortedNumbers = sortedWinners;
-    sortedNumbers.insert(sortedNumbers.begin(), sortedPairs[0].first);
-    for (int i = 1; i < JacobIndexes.size(); i++)
-    {
-        std::pair<int, int> currPair = sortedPairs[JacobIndexes[i]];
-        int looser = currPair.first;
-        int winner = currPair.second;
-        std::vector<int>::iterator winnerPos = find(sortedNumbers.begin(), sortedNumbers.end(), winner);
-        std::vector<int>::iterator insertionPos = std::lower_bound(sortedNumbers.begin(), winnerPos, looser);
-        sortedNumbers.insert(insertionPos, looser);
-    }
-    return sortedNumbers;
-}
-
-Pairs_t AC4_SortedPairsByWinners(Pairs_t &Pairs, std::vector<int> &sortedWinners)
-{
-    Pairs_t sortedPairs;
-    for(int i = 0; i < sortedWinners.size(); i++)
-    {
-        for(int j = 0; j < Pairs.size(); j++)
-        {
-            if (Pairs[j].second == sortedWinners[i])
+            if (pairs[i].second == *winnerIt)
             {
-                sortedPairs.push_back(Pairs[j]);
+                sortedPairs.push_back(pairs[i]);
                 break;
             }
         }
+        ++winnerIt;
     }
     return sortedPairs;
 }
 
-void AC3_GetWinners(Pairs_t &Pairs, std::vector<int> &Winners)
+template <typename Container>
+Container insertLosers(const PairVector &sortedPairs, const Container &sortedWinners)
 {
-    for(int i = 0; i < Pairs.size(); i++)
+    if (sortedPairs.empty())
+        return sortedWinners;
+
+    Container sortedNumbers = sortedWinners;
+    sortedNumbers.insert(sortedNumbers.begin(), sortedPairs[0].first);
+    IntVector jacobsthal =
+        generateJacobsthalSequence(static_cast<int>(sortedPairs.size()));
+    IntVector insertionIndexes =
+        generateInsertionIndexes(jacobsthal, static_cast<int>(sortedPairs.size()));
+    for (size_t i = 0; i < insertionIndexes.size(); ++i)
     {
-        Winners.push_back(Pairs[i].second);
+        int pairIndex = insertionIndexes[i];
+        int loser = sortedPairs[pairIndex].first;
+        int winner = sortedPairs[pairIndex].second;
+
+        typename Container::iterator winnerPosition =
+            std::find(sortedNumbers.begin(), sortedNumbers.end(), winner);
+        typename Container::iterator insertionPosition =
+            std::lower_bound(sortedNumbers.begin(), winnerPosition, loser);
+        sortedNumbers.insert(insertionPosition, loser);
     }
+    return sortedNumbers;
 }
 
-void AC2_SortEachPair(Pairs_t &Pairs)
+template <typename Container>
+void insertLeftover(Container &sortedNumbers, int leftover)
 {
-    for (int i = 0; i < Pairs.size(); i++)
-    {
-        if (Pairs[i].first > Pairs[i].second)
-            std::swap(Pairs[i].first, Pairs[i].second);
-    }
+    typename Container::iterator insertionPosition =
+        std::lower_bound(sortedNumbers.begin(), sortedNumbers.end(), leftover);
+    sortedNumbers.insert(insertionPosition, leftover);
 }
 
-Pairs_t AC1_CreatePairs(std::vector<int> Sequence, int &leftOver)
+template <typename Container>
+Container fordJohnsonSort(const Container &sequence)
 {
-    Pairs_t pairs;
-    if (Sequence.size() % 2 != 0)
+    if (sequence.size() <= 1)
+        return sequence;
+    if (sequence.size() == 2)
     {
-        leftOver = Sequence.back();
-        Sequence.pop_back();
+        Container sorted = sequence;
+        if (sorted[0] > sorted[1])
+            std::swap(sorted[0], sorted[1]);
+        return sorted;
     }
-    for(int i = 0; i < Sequence.size(); i+=2)
-    {
-        pairs.push_back(std::make_pair(Sequence[i], Sequence[i + 1]));
-    }
-    return pairs;
-}
+    int leftover = 0;
+    bool hasLeftover = false;
+    PairVector pairs = createPairs(sequence, leftover, hasLeftover);
+    sortEachPair(pairs);
+    Container winners = getWinners<Container>(pairs);
+    Container sortedWinners = fordJohnsonSort(winners);
+    PairVector sortedPairs = sortPairsByWinners(pairs, sortedWinners);
+    Container sortedNumbers = insertLosers<Container>(sortedPairs, sortedWinners);
 
-
-std::vector<int> FordJhonson(std::vector<int> Sequence)
-{
-    if (Sequence.size() == 1)
-    {
-        return Sequence;
-    }
-    int leftOver = -1;
-    std::vector<int> Winners;
-    Pairs_t Pairs = AC1_CreatePairs(Sequence, leftOver);
-    AC2_SortEachPair(Pairs);
-    AC3_GetWinners(Pairs, Winners);
-    std::vector<int> sortedWinners = FordJhonson(Winners);
-    Pairs_t sortedPairs = AC4_SortedPairsByWinners(Pairs, sortedWinners);
-    std::vector<int> JacobSeq = AC7_generateJcob(sortedWinners.size());
-    std::vector<int> Jacobindexs = AC8_indexesWithJacob(JacobSeq);
-    std::vector<int> sortedNumbers = AC5_insertLoosers(sortedPairs, sortedWinners, Jacobindexs);
-    if (leftOver != -1)
-        AC6_insertLeft(sortedNumbers, leftOver);
+    if (hasLeftover)
+        insertLeftover(sortedNumbers, leftover);
     return sortedNumbers;
 }
 
 
-#include <iostream>
-#include <vector>
 
-
-int main()
+int main(int argc, char **argv)
 {
-    std::vector<int> sequence;
+    std::vector<int> input;
 
-    sequence.push_back(10);
-    sequence.push_back(3);
-    sequence.push_back(7);
-    sequence.push_back(2);
-    sequence.push_back(8);
+    if (!parseArguments(argc, argv, input))
+    {
+        std::cerr << "Error" << std::endl;
+        return 1;
+    }
+
+    std::vector<int> vectorSequence(input.begin(), input.end());
+    std::deque<int> dequeSequence(input.begin(), input.end());
 
     std::cout << "Before: ";
-    printVector(sequence);
+    printSequence(input);
 
-    std::vector<int> sortedSequence = FordJhonson(sequence);
+    std::vector<int> sortedVector = fordJohnsonSort(vectorSequence);
+    std::deque<int> sortedDeque = fordJohnsonSort(dequeSequence);
 
-    std::cout << "After:  ";
-    printVector(sortedSequence);
-    
-    // std::vector<int> JacobSeq = AC7_generateJcob(7);
-    // printVector(JacobSeq);
-    // std::vector<int > indexes = AC8_indexesWithJacob(JacobSeq);
-    // printVector(indexes);
+    std::cout << "After vector: ";
+    printSequence(sortedVector);
+    std::cout << "After deque:  ";
+    printSequence(sortedDeque);
+
     return 0;
 }
