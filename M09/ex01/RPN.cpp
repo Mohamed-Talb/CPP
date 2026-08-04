@@ -1,61 +1,59 @@
 #include "RPN.hpp"
 
-RPN::RPN(RPN &r) {(void)r;}
-void RPN::operator=(RPN &r) {(void)r;}
-RPN::RPN() {}
-RPN::~RPN() {}
-
-static int apllyOperation(int left, char op, int right)
+static int applyOperation(int left, char operation, int right)
 {
-    if (op == '+')
+    if (operation == '+')
         return left + right;
-    else if (op == '-')
+
+    if (operation == '-')
         return left - right;
-    else if (op == '*')
+
+    if (operation == '*')
         return left * right;
-    else
+
+    if (operation == '/')
     {
         if (right == 0)
-            throw new std::runtime_error("Error");
+            throw std::runtime_error("Error");
+
         return left / right;
     }
+
+    throw std::runtime_error("Error");
 }
 
-int RPN::execute(std::string RPNString) 
+int RPN(const std::string &expression)
 {
-    size_t RPNLen = RPNString.length();
-    std::stack<int> numbersStack;
-    int left, right;
-    size_t result;
-    if (RPNString.empty())
-        throw new std::runtime_error("Error");
-    for (size_t i = 0; i < RPNLen; i++)
+    if (expression.empty())
+        throw std::runtime_error("Error");
+
+    std::stringstream stream(expression);
+    std::stack<int> numbers;
+    std::string token;
+
+    while (stream >> token)
     {
-        char curr =  RPNString[i];
-        if (curr == '+' || curr == '-' || curr == '/' || curr == '*')
+        if (token.size() != 1)
+            throw std::runtime_error("Error");
+
+        char current = token[0];
+        if (std::isdigit(static_cast<unsigned char>(current)))
         {
-            if (numbersStack.size() < 2)
-                throw new std::runtime_error("Error");
-            right = numbersStack.top();
-            numbersStack.pop();
-            left  = numbersStack.top();
-            numbersStack.pop();
-            result = apllyOperation(left, curr, right);
-            numbersStack.push(result);
-        }
-        else if (std::isdigit(curr))
-        {
-            if (i != 0 && i != RPNLen - 1)
-                if (!std::isspace(RPNString[i + 1]) || !std::isspace(RPNString[i - 1]))
-                    throw new std::runtime_error("Error");
-            numbersStack.push(curr - '0');
-        }
-        else if (std::isspace(curr))
+            numbers.push(current - '0');
             continue;
-        else 
-            throw new std::runtime_error("Error");
+        }
+        if (current != '+' && current != '-' && current != '*' && current != '/')
+            throw std::runtime_error("Error");
+        if (numbers.size() < 2)
+            throw std::runtime_error("Error");
+        int right = numbers.top();
+        numbers.pop();
+        int left = numbers.top();
+        numbers.pop();
+        numbers.push(applyOperation(left, current, right));
     }
-    if (numbersStack.size() != 1)
-        throw new std::runtime_error("Error");
-    return numbersStack.top();
+    if (numbers.size() != 1)
+        throw std::runtime_error("Error");
+
+    return numbers.top();
 }

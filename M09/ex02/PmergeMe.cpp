@@ -1,12 +1,8 @@
-#include <algorithm>
-#include <cstddef>
-#include <deque>
-#include <utility>
-#include <vector>
+#include "PmergeMe.hpp"
 
-typedef std::vector<int> IntVector;
 typedef std::deque<int> IntDeque;
 typedef std::pair<int, int> Pair;
+typedef std::vector<int> IntVector;
 typedef std::vector<Pair> PairVector;
 
 IntVector generateJacobsthalSequence(int pairCount)
@@ -132,7 +128,7 @@ void insertLeftover(IntVector &sortedNumbers, int leftover)
     sortedNumbers.insert(insertionPosition, leftover);
 }
 
-IntVector fordJohnsonVector(const IntVector &sequence)
+IntVector fordJohnson(const IntVector &sequence)
 {
     if (sequence.size() <= 1)
         return sequence;
@@ -148,7 +144,7 @@ IntVector fordJohnsonVector(const IntVector &sequence)
     PairVector pairs = createPairs(sequence, leftover, hasLeftover);
     sortEachPair(pairs);
     IntVector winners = getWinners(pairs);
-    IntVector sortedWinners = fordJohnsonVector(winners);
+    IntVector sortedWinners = fordJohnson(winners);
     PairVector sortedPairs = sortPairsByWinners(pairs, sortedWinners);
     IntVector sortedNumbers = insertLosers(sortedPairs, sortedWinners);
     if (hasLeftover)
@@ -156,10 +152,10 @@ IntVector fordJohnsonVector(const IntVector &sequence)
     return sortedNumbers;
 }
 
-IntDeque fordJohnsonDeque(const IntDeque &sequence)
+IntDeque fordJohnson(const IntDeque &sequence)
 {
     IntVector vectorSequence(sequence.begin(), sequence.end());
-    IntVector sortedVector = fordJohnsonVector(vectorSequence);
+    IntVector sortedVector = fordJohnson(vectorSequence);
     IntDeque sortedDeque(sortedVector.begin(), sortedVector.end());
     return sortedDeque;
 }

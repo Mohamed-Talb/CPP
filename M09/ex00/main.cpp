@@ -1,17 +1,23 @@
 #include "BitcoinExchange.hpp"
 
-int main(int ac, char **av)
+
+int main(int argc, char **argv)
 {
-    if (ac != 2)
-        std::cout << "Error: Invalid Arguments" << std::endl;
-    std::string DBPath = "./data.csv";
-    BitcoinExchange Bit(DBPath);
+    if (argc != 2)
+    {
+        std::cerr << "Error: invalid number of arguments." << std::endl;
+        return 1;
+    }
+
     try
     {
-        Bit.printExchangeHistory(av[1]);
+        BitcoinExchange("data.csv", argv[1]);
     }
-    catch (std::exception *err)
+    catch (const std::exception &exception)
     {
-        std::cout << err->what() << std::endl;
+        std::cerr << exception.what() << std::endl;
+        return 1;
     }
+
+    return 0;
 }

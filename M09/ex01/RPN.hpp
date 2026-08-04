@@ -4,21 +4,12 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <map>
 #include <stdexcept>
 #include <cstdlib>
 #include <cctype>
-#include "stack"
+#include <stack>
+#include <sstream>
 
-class RPN
-{
-    private:
-    RPN(RPN &r);
-    void operator=(RPN &r);
-    public:
-    RPN();
-    ~RPN();
-    int execute(std::string RPNString);
-};
+int RPN(const std::string &expression);
 
 #endif

@@ -1,19 +1,23 @@
 #include "RPN.hpp"
 
-int main(int ac, char **av)
+int main(int argc, char **argv)
 {
-    RPN rpn;
-    std::string RPNSring;
-    for (int i = 1; i < ac; i++)
+    if (argc != 2)
     {
-        RPNSring += av[i];
+        std::cerr << "Error" << std::endl;
+        return 1;
     }
+
     try
     {
-        std::cout << rpn.execute(RPNSring) << std::endl;
+        int result = RPN(argv[1]);
+        std::cout << result << std::endl;
     }
-    catch (std::exception *err)
+    catch (const std::exception &exception)
     {
-        std::cout << err->what() << std::endl;
+        std::cerr << exception.what() << std::endl;
+        return 1;
     }
+
+    return 0;
 }
