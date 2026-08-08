@@ -30,14 +30,17 @@ void	Harl::complain(str level) {
 	}
 	switch (i)
 	{
-	case 0:
-		this->debug();
-	case 1:
-		this->info();
-	case 2:
-		this->warning();
-	case 3:
-		this->error();
-		break;
+		case 0:
+			this->debug();
+			break;
+		case 1:
+			this->info();
+			break;
+		case 2:
+			this->warning();
+			break;
+		case 3:
+			this->error();
+			break;
 	}
 }

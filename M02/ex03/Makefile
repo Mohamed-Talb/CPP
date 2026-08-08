@@ -1,4 +1,4 @@
-BSP_SRC = main.cpp BSP.cpp Point.cpp bsp.cpp
+BSP_SRC = main.cpp Fixed.cpp Point.cpp bsp.cpp
 
 BSP_OBJ = $(BSP_SRC:.cpp=.o)
 
